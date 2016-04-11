@@ -8,6 +8,10 @@ class DiceOutcome(Enum):
     Five=5
     Six=6
 
+class GameType(Enum):
+    GroupInitiated = 1
+    PrivateInitiated = 2
+
 class LiarsDiceGame ():
     def __init__(self, game_id, host_id):
         self.game_id = game_id
