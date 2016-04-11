@@ -23,20 +23,20 @@ class LiarsDiceBot(telepot.helper.ChatHandler):
     def __init__(self, seed_tuple, timeout):
         super(LiarsDiceBot, self).__init__(seed_tuple, timeout)
         self._convert_type = ConverType.nothing
-        print('constructor is being called')
+        print(u'constructor is being called')
 
     def on_message(self, msg):
-        print('on_message() is being called')
+        print(u'on_message() is being called')
         flavor = telepot.flavor(msg)
 
         # normal message
-        if flavor == 'normal':
+        if chkNConv(flavor) == u'normal':
             content_type, chat_type, _chat_id = telepot.glance2(msg)
             print('Normal Message:', content_type, chat_type, _chat_id, '; message content: ', msg)
 
             if self._convert_type == ConverType.nothing:
                 if chkNConv(msg['text']) == u'/start':
-                    self.sender.sendMessage(text='game start')
+                    self.sender.sendMessage(text=bot_starting_script)
 
         else:
             raise telepot.BadFlavor(msg)
