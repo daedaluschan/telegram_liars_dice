@@ -10,6 +10,11 @@ from types import *
 from enum import Enum
 import re
 
+from liars_dice_script import *
+from liars_dice_game import LiarsDiceGame, DiceOutcome
+from liars_dice_util import chkNConv
+
+all_games = {}
 
 class ConverType(Enum):
     nothing = 1
@@ -30,7 +35,7 @@ class LiarsDiceBot(telepot.helper.ChatHandler):
             print('Normal Message:', content_type, chat_type, _chat_id, '; message content: ', msg)
 
             if self._convert_type == ConverType.nothing:
-                if msg['text'] == u'/start':
+                if chkNConv(msg['text']) == u'/start':
                     self.sender.sendMessage(text='game start')
 
         else:
