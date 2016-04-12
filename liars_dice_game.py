@@ -45,7 +45,7 @@ class LiarsDiceGame:
             self.game_type = GameType.PrivateInitiated
         else:
             self.game_type = GameType.GroupInitiated
-        self.create_time = datetime()
+        self.create_time = datetime.now()
         self.player_list = []
 
     @property
