@@ -11,6 +11,7 @@ from enum import Enum
 import re
 from random import randint
 
+from liars_dice_config import *
 from liars_dice_script import *
 from liars_dice_game import LiarsDiceGame, DiceOutcome
 from liars_dice_util import chkNConv
@@ -19,6 +20,9 @@ all_games = {}
 
 class ConverType(Enum):
     nothing = 1
+
+def genNewRoomNumber():
+    return randint(game_room_starts, game_room_ends)
 
 class LiarsDiceBot(telepot.helper.ChatHandler):
     def __init__(self, seed_tuple, timeout):
@@ -41,9 +45,9 @@ class LiarsDiceBot(telepot.helper.ChatHandler):
                         self.sender.sendMessage(text=bot_starting_script)
                     elif chkNConv(msg['text']) == u'/newgame':
                         print(u'new game now')
-                        game_id = randint(1001, 9999)
+                        game_id = genNewRoomNumber()
                         while game_id in all_games:
-                            game_id = randint(1001, 9999)
+                            game_id = genNewRoomNumber()
                         print(u'new game with game id: ' + chkNConv(game_id.__str__()))
                         if chat_type == 'group' or chat_type == 'supergroup':
                             all_games[game_id] = LiarsDiceGame(game_id=game_id,

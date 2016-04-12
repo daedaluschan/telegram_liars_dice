@@ -17,6 +17,10 @@ class LiarsDiceGame ():
         self.game_id = game_id
         self.host_id = host_id
         self.group_id = group_id
+        if self.group_id == 0:
+            self.game_type = GameType.PrivateInitiated
+        else:
+            self.game_type = GameType.GroupInitiated
 
     @property
     def game_id(self):
@@ -41,3 +45,11 @@ class LiarsDiceGame ():
     @group_id.setter
     def group_id(self, value):
         self._group_id = value
+
+    @property
+    def game_type(self):
+        return self._game_type
+
+    @game_type.setter
+    def game_type(self, value):
+        self.game_type = value
