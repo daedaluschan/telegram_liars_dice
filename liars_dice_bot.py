@@ -9,6 +9,7 @@ from datetime import date
 from types import *
 from enum import Enum
 import re
+from random import randint
 
 from liars_dice_script import *
 from liars_dice_game import LiarsDiceGame, DiceOutcome
@@ -34,9 +35,26 @@ class LiarsDiceBot(telepot.helper.ChatHandler):
             content_type, chat_type, _chat_id = telepot.glance2(msg)
             print('Normal Message:', content_type, chat_type, _chat_id, '; message content: ', msg)
 
-            if self._convert_type == ConverType.nothing:
-                if chkNConv(msg['text']) == u'/start':
-                    self.sender.sendMessage(text=bot_starting_script)
+            if content_type == 'text':
+                if self._convert_type == ConverType.nothing:
+                    if chkNConv(msg['text']) == u'/start':
+                        self.sender.sendMessage(text=bot_starting_script)
+                    elif chkNConv(msg['text']) == u'/newgame':
+                        print(u'new game now')
+                        game_id = randint(1001, 9999)
+                        while game_id in all_games:
+                            game_id = randint(1001, 9999)
+                        print(u'new game with game id: ' + chkNConv(game_id.__str__()))
+                        if chat_type == 'group' or chat_type == 'supergroup':
+                            all_games[game_id] = LiarsDiceGame(game_id=game_id,
+                                                           host_id=msg['from']['id'],
+                                                           group_id=msg['chat']['id'])
+                        else:
+                            all_games[game_id] = LiarsDiceGame(game_id=game_id,
+                                                           host_id=msg['from']['id'],
+                                                           group_id=0)
+
+
 
         else:
             raise telepot.BadFlavor(msg)

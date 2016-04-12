@@ -13,9 +13,10 @@ class GameType(Enum):
     PrivateInitiated = 2
 
 class LiarsDiceGame ():
-    def __init__(self, game_id, host_id):
+    def __init__(self, game_id, host_id, group_id):
         self.game_id = game_id
         self.host_id = host_id
+        self.group_id = group_id
 
     @property
     def game_id(self):
@@ -32,3 +33,11 @@ class LiarsDiceGame ():
     @host_id.setter
     def host_id(self, value):
         self._host_id = value
+
+    @property
+    def group_id(self):
+        return self._group_id
+
+    @group_id.setter
+    def group_id(self, value):
+        self._group_id = value
