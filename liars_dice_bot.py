@@ -48,7 +48,7 @@ class LiarsDiceBot(telepot.helper.ChatHandler):
                                            host_id=msg['from']['id'],
                                            group_id=0)
 
-        all_games[game_id].player_list.append(Player(msg['from']['id']), msg['from']['first_name'])
+        all_games[game_id].player_list.append(Player(msg['from']['id'], msg['from']['first_name']))
         start_url = telegram_base_url + bot_name + '?start=' + game_id.__str__()
         self.sender.sendMessage(text=bot_invite_player % (chkNConv(msg['from']['first_name']),
                                                           chkNConv(bot_name),
