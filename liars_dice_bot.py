@@ -50,7 +50,9 @@ class LiarsDiceBot(telepot.helper.ChatHandler):
 
         all_games[game_id].player_list.append(Player(msg['from']['id']), msg['from']['first_name'])
         start_url = telegram_base_url + bot_name + '?start=' + game_id.__str__()
-        self.sender.sendMessage(text=bot_invite_player % (msg['from']['first_name'], bot_name, start_url))
+        self.sender.sendMessage(text=bot_invite_player % (chkNConv(msg['from']['first_name']),
+                                                          chkNConv(bot_name),
+                                                          chkNConv(start_url)))
 
     def on_message(self, msg):
         print(u'on_message() is being called')
@@ -65,7 +67,7 @@ class LiarsDiceBot(telepot.helper.ChatHandler):
                 if self._convert_type == ConverType.nothing:
                     if chkNConv(msg['text']) == u'/start':
                         self.sender.sendMessage(text=bot_starting_script)
-                    elif chkNConv(msg['text']) == u'/newgame':
+                    elif chkNConv(msg['text']) == u'/newgame' or chkNConv(msg['text']) == u'/newgame@' + chkNConv(bot_name):
                         self.create_game(msg=msg)
         else:
             raise telepot.BadFlavor(msg)
